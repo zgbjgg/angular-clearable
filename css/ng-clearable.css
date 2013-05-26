@@ -1,0 +1,4 @@
+.clear_button, .clear_button:hover {
+    color: darkgray;
+    text-decoration: none;
+}
