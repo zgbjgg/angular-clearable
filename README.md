@@ -4,13 +4,13 @@ An [AngularJS](http://angularjs.org/) directive for adding a clear button inside
 
 ## How to use angular-clearable
 
-Just include `ng-clearable.js` after angularjs (jQuery is not required).
-Then you will need to make sure you require `ngClearable` in your app module. That's it!
+Just include `angular-clearable.js` after angularjs (jQuery is not required).
+Then you will need to make sure you require `xngClearable` in your app module. That's it!
 
-Using the `ng-clearable` directive is pretty simple:
+Using the `xng-clearable` directive is pretty simple:
 
 ```
-<input type="text" ng-model="test" ng-clearable />
+<input type="text" ng-model="test" xng-clearable />
 ```
 
 ## License.
