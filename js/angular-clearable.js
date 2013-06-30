@@ -17,8 +17,8 @@
     along with angular-clearable.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-angular.module('xngClearable', [])
-    .directive('xngClearable', function() {
+angular.module('xngClearable', []).
+    directive('xngClearable', function() {
         return {
             restrict: 'A',
             require: 'ngModel',
