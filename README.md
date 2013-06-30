@@ -13,6 +13,14 @@ Using the `xng-clearable` directive is pretty simple:
 <input type="text" ng-model="test" xng-clearable />
 ```
 
+## Bower
+
+You can install angular-clearable using [Bower](http://bower.io/):
+
+```
+bower install angular-clearable
+```
+
 ## License.
 
 This code is licensed under the [GPLv3 license](http://www.gnu.org/licenses/gpl.html).
