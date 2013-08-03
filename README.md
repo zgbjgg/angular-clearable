@@ -23,7 +23,7 @@ bower install angular-clearable
 
 ## License.
 
-This code is licensed under the [GPLv3 license](http://www.gnu.org/licenses/gpl.html).
+This code is licensed under The MIT License (MIT).
 
 ## Credit
 
