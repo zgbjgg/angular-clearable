@@ -35,7 +35,7 @@ angular.module('xngClearable', []).
 
                 if (!tElement.parent().hasClass(divClass)) {
                     tElement.wrap('<div style="position: relative;" class="' + divClass + '">' + tElement.html() + '</div>');
-                    tElement.after('<a style="position: absolute; cursor: pointer;" class="' + clearClass + '">&times;</a>');
+                    tElement.after('<a style="position: absolute; cursor: pointer;" tabindex="-1" class="' + clearClass + '">&times;</a>');
 
                     var btn = tElement.next();
 
