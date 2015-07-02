@@ -34,18 +34,16 @@ angular.module('xngClearable', []).
                     divClass = clearClass + '_div';
 
                 if (!tElement.parent().hasClass(divClass)) {
-                    tElement.wrap('<div style="position: relative;" class="' + divClass + '">' + tElement.html() + '</div>');
-                    tElement.after('<a style="position: absolute; cursor: pointer;" tabindex="-1" class="' + clearClass + '">&times;</a>');
+
+                    tElement.after('<a tabindex="-1" class="' + clearClass + '">&times;</a>');
 
                     var btn = tElement.next();
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*0.8) + 'px');
-                    btn.css('top', '2px');
-                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*1.3) + 'px');
+                    btn.css('font-size', Math.round(tElement.prop('offsetHeight') * 0.8) + 'px');
 
                     return function(scope, iElement, iAttrs) {
-                        if (iElement[0].tagName == 'DIV') {
-                            var text = angular.element(iElement.children()[0]);
+                        if (iElement[0].tagName == 'INPUT') {
+                            var text = angular.element(iElement[0]);
 
                             btn.bind('mousedown', function(e) {
                                 text.val('');
