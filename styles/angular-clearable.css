@@ -23,16 +23,14 @@
  * THE SOFTWARE.
  *
  */
-
 .clear_button {
-    top: -2px;
-    position: absolute;
-    cursor: pointer;
-    z-index: 1500;
-    right: 10px;
-}
+  top: -2px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1500;
+  right: 15px;
+  color: darkgray; }
+  .clear_button:hover {
+    text-decoration: none; }
 
-.clear_button, .clear_button:hover {
-    color: darkgray;
-    text-decoration: none;
-}
+/*# sourceMappingURL=angular-clearable.css.map */
