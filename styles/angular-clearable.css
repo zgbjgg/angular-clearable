@@ -23,6 +23,13 @@
  * THE SOFTWARE.
  *
  */
+.xng-clearable {
+  /* Remove Internet Explorer native clear button */ }
+  .xng-clearable::-ms-clear {
+    display: none; }
+  .xng-clearable:focus::-ms-clear {
+    display: none; }
+
 .clear_button {
   top: -2px;
   position: absolute;

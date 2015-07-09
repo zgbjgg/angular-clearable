@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Copyright (c) 2013 Giacomo Antolini <giacomo.antolini@gmail.com>.
  * All rights reserved.
@@ -25,42 +27,44 @@
  */
 
 angular.module('xngClearable', []).
-    directive('xngClearable', function() {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            compile: function(tElement) {
-                var clearClass = 'clear_button',
-                    divClass = clearClass + '_div';
+directive('xngClearable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        compile: function(tElement) {
 
-                if (!tElement.parent().hasClass(divClass)) {
+            // Add css class to input
+            tElement.addClass('xng-clearable');
 
-                    tElement.after('<a tabindex="-1" class="' + clearClass + '">&times;</a>');
+            // Class name for clear button
+            var clearClass = 'clear_button';
 
-                    var btn = tElement.next();
+            // Add clear button DOM element
+            tElement.after('<a tabindex="-1" class="' + clearClass + '">&times;</a>');
+            var btn = tElement.next();
+            btn.css('font-size', Math.round(tElement.prop('offsetHeight') * 0.8) + 'px');
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight') * 0.8) + 'px');
+            return function(scope, iElement, iAttrs) {
 
-                    return function(scope, iElement, iAttrs) {
-                        if (iElement[0].tagName == 'INPUT') {
-                            var text = angular.element(iElement[0]);
+                if (iElement[0].tagName === 'INPUT') {
+                    var text = angular.element(iElement[0]);
 
-                            btn.bind('mousedown', function(e) {
-                                text.val('');
-                                text.triggerHandler('input');
-                                e.preventDefault();
-                            });
+                    btn.bind('mousedown', function(e) {
+                        text.val('');
+                        text.triggerHandler('input');
+                        e.preventDefault();
+                    });
 
-                            scope.$watch(iAttrs.ngModel, function (v) {
-                                if (v && v.length > 0) {
-                                    btn.css('display', 'block');
-                                } else {
-                                    btn.css('display', 'none');
-                                }
-                            });
+                    scope.$watch(iAttrs.ngModel, function(v) {
+                        if (v && v.length > 0) {
+                            btn.css('display', 'block');
+                        } else {
+                            btn.css('display', 'none');
                         }
-                    }
+                    });
                 }
-            }
+            };
+
         }
-    });
+    };
+});

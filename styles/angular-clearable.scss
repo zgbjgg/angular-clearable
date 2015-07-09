@@ -24,6 +24,18 @@
  *
  */
 
+.xng-clearable {
+    /* Remove Internet Explorer native clear button */
+    &::-ms-clear {
+        display: none;
+    }
+    &:focus {
+        &::-ms-clear {
+            display: none;
+        }
+    }
+}
+
 .clear_button {
     top: -2px;
     position: absolute;
@@ -32,7 +44,6 @@
     right: 15px;
     color: darkgray;
     &:hover {
-        color: darkgray;
         text-decoration: none;
     }
 }
