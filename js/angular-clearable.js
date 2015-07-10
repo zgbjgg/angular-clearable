@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * Copyright (c) 2013 Giacomo Antolini <giacomo.antolini@gmail.com>.
  * All rights reserved.
@@ -25,44 +27,44 @@
  */
 
 angular.module('xngClearable', []).
-    directive('xngClearable', function() {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            compile: function(tElement) {
-                var clearClass = 'clear_button',
-                    divClass = clearClass + '_div';
+directive('xngClearable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        compile: function(tElement) {
 
-                if (!tElement.parent().hasClass(divClass)) {
-                    tElement.wrap('<div style="position: relative;" class="' + divClass + '">' + tElement.html() + '</div>');
-                    tElement.after('<a style="position: absolute; cursor: pointer;" tabindex="-1" class="' + clearClass + '">&times;</a>');
+            // Add css class to input
+            tElement.addClass('xng-clearable');
 
-                    var btn = tElement.next();
+            // Class name for clear button
+            var clearClass = 'clear_button';
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*0.8) + 'px');
-                    btn.css('top', '2px');
-                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*1.3) + 'px');
+            // Add clear button DOM element
+            tElement.after('<a tabindex="-1" class="' + clearClass + '">&times;</a>');
+            var btn = tElement.next();
+            btn.css('font-size', Math.round(tElement.prop('offsetHeight') * 0.8) + 'px');
 
-                    return function(scope, iElement, iAttrs) {
-                        if (iElement[0].tagName == 'DIV') {
-                            var text = angular.element(iElement.children()[0]);
+            return function(scope, iElement, iAttrs) {
 
-                            btn.bind('mousedown', function(e) {
-                                text.val('');
-                                text.triggerHandler('input');
-                                e.preventDefault();
-                            });
+                if (iElement[0].tagName === 'INPUT') {
+                    var text = angular.element(iElement[0]);
 
-                            scope.$watch(iAttrs.ngModel, function (v) {
-                                if (v && v.length > 0) {
-                                    btn.css('display', 'block');
-                                } else {
-                                    btn.css('display', 'none');
-                                }
-                            });
+                    btn.bind('mousedown', function(e) {
+                        text.val('');
+                        text.triggerHandler('input');
+                        e.preventDefault();
+                    });
+
+                    scope.$watch(iAttrs.ngModel, function(v) {
+                        if (v && v.length > 0) {
+                            btn.css('display', 'block');
+                        } else {
+                            btn.css('display', 'none');
                         }
-                    }
+                    });
                 }
-            }
+            };
+
         }
-    });
+    };
+});
