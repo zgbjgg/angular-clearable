@@ -61,10 +61,6 @@ angular.module('xngClearable', []).
 
                         var btn = angular.element(tElement.next());
 
-                        btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
-                        btn.css('top', xngClearableConfig.setTopPx + 'px');
-                        btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
-
                         btn.bind('mousedown', function() {
                             scope.$apply(scope.model = undefined);
                         });
@@ -72,6 +68,10 @@ angular.module('xngClearable', []).
                         scope.$watch('model', function () {
 			    if ( scope.model && scope.model.length > 0) {
                                 btn.css('display', 'block');
+
+                                btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
+                                btn.css('top', xngClearableConfig.setTopPx + 'px');
+                                btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
                             } else {
                                 if ( tAttr.xngClearable != '' ) {
                                     scope.$parent[tAttr.xngClearable]();
