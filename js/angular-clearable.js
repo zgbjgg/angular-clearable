@@ -74,6 +74,9 @@ angular.module('xngClearable', []).
                                 if (v && v.length > 0) {
                                     btn.css('display', 'block');
                                 } else {
+                                    if ( iAttrs.xngClearable != '' ) {
+                                        scope[iAttrs.xngClearable]();
+                                    }
                                     btn.css('display', 'none');
 				}
                             });
