@@ -66,7 +66,7 @@ angular.module('xngClearable', []).
                         });
 
                         scope.$watch('model', function () {
-			    if ( scope.model && scope.model.length > 0) {
+			    if ( scope.model && scope.model.length > 0 && !tAttr["disabled"]) {
                                 btn.css('display', 'block');
 
                                 btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
