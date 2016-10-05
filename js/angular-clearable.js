@@ -42,46 +42,47 @@ angular.module('xngClearable', []).
             return this;
         }
     }).
-    directive('xngClearable', function(xngClearableConfig) {
+    directive('xngClearable', function(xngClearableConfig, $timeout) {
         return {
             restrict: 'A',
-            require: 'ngModel',
-            compile: function(tElement) {
+            transclude: false,
+            scope: { model: '=ngModel' },
+            link: function(scope, tElement, tAttr) {
+		scope.model = (typeof scope.model === 'undefined') ? "" : scope.model;
+
                 var clearClass = 'clear_button',
                     divClass = clearClass + '_div';
 
                 if (!tElement.parent().hasClass(divClass)) {
-                    tElement.wrap('<div style="position: relative;" class="' + divClass + '">' + tElement.html() + '</div>');
-                    tElement.after('<a style="position: absolute; cursor: pointer;" tabindex="-1" class="' + clearClass + '">&times;</a>');
+                    // set all in a render, so we can work even in modals!
+                    var render = function() {
+                        tElement.wrap('<div style="position: relative;" class="' + divClass + '">' + tElement.html() + '</div>');
+                        tElement.after('<a style="position: absolute; cursor: pointer;" tabindex="-1" class="' + clearClass + '">&times;</a>');
 
-                    var btn = tElement.next();
+                        var btn = angular.element(tElement.next());
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
-                    btn.css('top', xngClearableConfig.setTopPx + 'px');
-                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
+                        btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
+                        btn.css('top', xngClearableConfig.setTopPx + 'px');
+                        btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
 
-                    return function(scope, iElement, iAttrs) {
-                        if (iElement[0].tagName == 'DIV') {
-                            var text = angular.element(iElement.children()[0]);
+                        btn.bind('mousedown', function() {
+                            scope.$apply(scope.model = undefined);
+                        });
 
-                            btn.bind('mousedown', function(e) {
-                                text.val('');
-                                text.triggerHandler('input');
-                                e.preventDefault();
-                            });
+                        scope.$watch('model', function () {
+			    if ( scope.model && scope.model.length > 0) {
+                                btn.css('display', 'block');
+                            } else {
+                                if ( tAttr.xngClearable != '' ) {
+                                    scope.$parent[tAttr.xngClearable]();
+                                }
+                                btn.css('display', 'none');
+                            }
+                        });
+		    }
 
-                            scope.$watch(iAttrs.ngModel, function (v) {
-                                if (v && v.length > 0) {
-                                    btn.css('display', 'block');
-                                } else {
-                                    if ( iAttrs.xngClearable != '' ) {
-                                        scope[iAttrs.xngClearable]();
-                                    }
-                                    btn.css('display', 'none');
-				}
-                            });
-                        }
-                    }
+                    // execute after all DOM has been rendered
+		    $timeout(render, 0);
                 }
             }
         }
