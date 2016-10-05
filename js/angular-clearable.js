@@ -25,7 +25,24 @@
  */
 
 angular.module('xngClearable', []).
-    directive('xngClearable', function() {
+    provider('xngClearableConfig', function() {
+        this.setFontSize = function ( fontSize ) {
+            this.fontSize = fontSize;
+        }
+
+        this.setTopPx = function ( topPx ) {
+            this.topPx = topPx;
+        }
+
+        this.setLeftPx = function ( leftPx ) {
+            this.leftPx = leftPx;
+        }
+
+        this.$get = function() {
+            return this;
+        }
+    }).
+    directive('xngClearable', function(xngClearableConfig) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -39,9 +56,9 @@ angular.module('xngClearable', []).
 
                     var btn = tElement.next();
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*0.8) + 'px');
-                    btn.css('top', '2px');
-                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*1.3) + 'px');
+                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*xngClearableConfig.setFontSize) + 'px');
+                    btn.css('top', xngClearableConfig.setTopPx + 'px');
+                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
 
                     return function(scope, iElement, iAttrs) {
                         if (iElement[0].tagName == 'DIV') {
@@ -58,7 +75,7 @@ angular.module('xngClearable', []).
                                     btn.css('display', 'block');
                                 } else {
                                     btn.css('display', 'none');
-                                }
+				}
                             });
                         }
                     }
