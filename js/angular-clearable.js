@@ -63,6 +63,9 @@ angular.module('xngClearable', []).
 
                         btn.bind('mousedown', function() {
                             scope.$apply(scope.model = undefined);
+                            if ( tAttr.xngClearable != '' ) {
+                                scope.$parent[tAttr.xngClearable]();
+                            }
                         });
 
                         scope.$watch('model', function () {
@@ -73,9 +76,6 @@ angular.module('xngClearable', []).
                                 btn.css('top', xngClearableConfig.setTopPx + 'px');
                                 btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*xngClearableConfig.setLeftPx) + 'px');
                             } else {
-                                if ( tAttr.xngClearable != '' ) {
-                                    scope.$parent[tAttr.xngClearable]();
-                                }
                                 btn.css('display', 'none');
                             }
                         });
