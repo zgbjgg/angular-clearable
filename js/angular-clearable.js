@@ -42,7 +42,7 @@ angular.module('xngClearable', []).
             return this;
         }
     }).
-    directive('xngClearable', function(xngClearableConfig, $timeout) {
+    directive('xngClearable',['xngClearableConfig', '$timeout', function(xngClearableConfig, $timeout) {
         return {
             restrict: 'A',
             transclude: false,
@@ -86,4 +86,4 @@ angular.module('xngClearable', []).
                 }
             }
         }
-    });
+    }]);
